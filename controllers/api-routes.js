@@ -7,12 +7,12 @@ module.exports = function (app) {
 
     app.get("/scrape", function(req, res){
 
-        axios.get("http://www.nytimes.com").then(function(response){
+        axios.get("http://www.nytimes.com/section/books/review").then(function(response){
 
             var $ = cheerio.load(response.data);
-            var dataArr = [];
+            var count = 0;
 
-            $("h2.story-heading").each(function (i, element){
+            $("h2.headline").each(function (i, element){
                 var result = {};
 
                 result.title = $(this).children("a").text();
@@ -23,17 +23,18 @@ module.exports = function (app) {
                     {
                         db.Article.create(result).then(function(dbArticle){
                             console.log(dbArticle);
+                            count++;
                         }).catch(function(err){
                             res.json(err);
                         });
                     }
             });
-            console.log("Scrape Complete");
+            console.log("Scrape Complete", count);
         });
     });
 
     // Route for getting all Articles from the db
-    app.get("/articles", function (req, res) {
+    app.get("/", function (req, res) {
         console.log("inside /articles");
         // TODO: Finish the route so it grabs all of the articles
         db.Article.find({}).then(function (articles) {

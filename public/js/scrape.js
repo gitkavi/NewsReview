@@ -6,18 +6,16 @@ $(function(){
             method:"GET",
             url:"/scrape"
         }).then(function(results){
-            console.log("back after creating records");
+            alert("scraped Records");
             getArticles();
         });
     });
 
     function getArticles(){
-        console.log("inside getArticles");
-        $.ajax({
-            method:"GET",
-            url:"/articles"
-        }).then(function(results){
-            console.log("getArticles completed");
+        $.getJSON("/", function(data){
+            console.log("fetching Articles completed");
         });
     }
+
+    getArticles();
 });
