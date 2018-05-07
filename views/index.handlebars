@@ -23,7 +23,7 @@
 </div>
 <div class="bg">
     <div class="hero-text">
-        <h1 style="font-size: 100px;">Book Review</h1>
+        <h1 style="font-size: 80px;">Book Review</h1>
         <p style="font-size: 30px; letter-spacing:2px;">New York Times Edition</p>
     </div>
 </div>
@@ -37,10 +37,13 @@
                 <div class="panel-heading">
                     <h4>
                         <a class="article-link" target="_blank" href={{this.link}}>{{this.title}}</a>
-                        <a class="btn btn-success save" data-id={{this._id}} >SAVE ARTICLE</a>
+                        <a class="btn btn-success save" data-id={{this._id}}>SAVE ARTICLE</a>
                     </h4>
                 </div>
-                <div class="panel-body">{{this.summary}}</div>
+                <div class="panel-body">
+                    <img class="thumbnail" id="article-img" style="display:inline" src={{this.img}}> 
+                    <p class="caption" style="display:inline;padding-left:10px;">{{this.summary}}</p>
+                </div>
             </div>
 
         </div>

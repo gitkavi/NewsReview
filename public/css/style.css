@@ -41,6 +41,11 @@ body, html {
     /* background: rgba(204, 204, 204, 0.5); */
   }
 
+#article-img{
+    height:100px;
+    width:100px;
+}
+
 .save{
     float:right;
     background-color: black;
@@ -77,6 +82,12 @@ body, html {
 
 .article-link:hover{
     color:black;
+}
+
+#note-lbl{
+    border-color: lightgray;
+    border:1px;
+    border-radius: 5px;
 }
 
 .delete{

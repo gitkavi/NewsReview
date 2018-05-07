@@ -8,11 +8,11 @@ module.exports = function(app){
             var $ = cheerio.load(response.data);
             $("div.story-body").each(function(i, element){
                 var result = {};
-
+                result.img = $(this).parent().find("figure").find("a").children("img").attr("src");
                 result.title = $(this).find("h2.headline").children("a").text();
                 result.link = $(this).find("h2.headline").children("a").attr("href");
                 result.summary = $(this).find("p.summary").text();
-                if(result.title !== '' && result.link !== ''){
+                if(result.title !== '' && result.link !== '' && result.img !== ''){
                     db.Article.create(result).then(function(dbArticle){
                         console.log(dbArticle);
                     }).catch(function(err){
@@ -58,6 +58,14 @@ module.exports = function(app){
         });
     });
 
+    app.get("/articles/:id", function(req, res){
+        db.Article.find({_id: req.params.id}).populate("note").then(function(articles){
+            res.json(articles);
+        }).catch(function(err){
+            res.json(err);
+        });
+    });
+
     app.get("/saved", function(req,res){
         db.Article.find({saved:true}).then(function(articles){
             res.render("saved",{articles:articles});
@@ -86,5 +94,15 @@ module.exports = function(app){
           }).catch(function (err) {
             res.json(err);
           });
+    });
+
+    app.delete("/delete/:id", function(req, res){
+        console.log("inside delete note click");
+        db.Note.findOneAndRemove({_id:req.params.id}).then(function(results){
+            console.log(results);
+            res.json(results);
+        }).catch(function(err){
+            res.json(err);
+        });
     });
 }

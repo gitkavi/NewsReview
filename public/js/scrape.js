@@ -55,3 +55,14 @@ $(document).on("click", "#save-note", function() {
         location.reload();
     });
 });
+
+$(document).on("click", "#note-del", function(){
+    console.log("delete note clicked");
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method:'DELETE',
+        url:'/delete/'+thisId
+    }).then(function(results){
+        location.reload();
+    });
+})
