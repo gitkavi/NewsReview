@@ -2,17 +2,17 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">News Review</a>
+            <a class="navbar-brand" href="#">Book Review</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="/">Home</a>
+                    <a href="#">Home</a>
                 </li>
                 <li>
-                    <a href="#">Saved Articles</a>
+                    <a href="/saved">Saved Articles</a>
                 </li>
             </ul>
             <button type="submit" class="btn btn-danger scrape-btn" id="scrape-btn">SCRAPE NEW ARTICLES!</button>
@@ -23,29 +23,33 @@
 </div>
 <div class="bg">
     <div class="hero-text">
-        <h1 style="font-size: 100px;">News Review</h1>
+        <h1 style="font-size: 100px;">Book Review</h1>
+        <p style="font-size: 30px; letter-spacing:2px;">New York Times Edition</p>
     </div>
 </div>
 <br>
 <section>
-        {{#if articles}}
-        {{#each articles}}
-        <div class="container" id="news-div">
-        <div>
+    {{#if articles}} {{#each articles}}
+    <div class="container">
+        <div class="row">
             <br>
-            <div class="row">
-                <h3>{{this.title}}</h3>
-                <h5>{{this.link}}</h5>
-            </div>
-        </div>
-        </div>
-        {{/each}}
-        {{/if}}
-        {{#unless articles}}
-        <div>
-            <div class="well text-center">
-                <h2>uh oh.. Looks like we don't have any new articles</h2>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>
+                        <a class="article-link" target="_blank" href={{this.link}}>{{this.title}}</a>
+                        <a class="btn btn-success save" data-id={{this._id}} >SAVE ARTICLE</a>
+                    </h4>
                 </div>
+                <div class="panel-body">{{this.summary}}</div>
+            </div>
+
         </div>
-        {{/unless}}
+    </div>
+    {{/each}} {{/if}} {{#unless articles}}
+    <div>
+        <div class="well text-center">
+            <h2>uh oh.. Looks like we don't have any new articles</h2>
+        </div>
+    </div>
+    {{/unless}}
 </section>

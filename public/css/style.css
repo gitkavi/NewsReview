@@ -36,5 +36,61 @@ body, html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: black;
+    background-color: lightgray;
+    /* background: rgba(204, 204, 204, 0.5); */
   }
+
+.save{
+    float:right;
+    background-color: black;
+    color:white;
+    border-color: black;
+    
+}
+.save:hover{
+    background-color: black;
+    color:white;
+    border-color: black;
+}
+.save:visited{
+    background-color: black;
+    color:white;
+    border-color: black;
+}
+.save:active{
+    background-color: black;
+    color:white;
+    border-color: black;
+}
+
+.article-link{
+    color:black;
+}
+
+.article-link:visited{
+    color:black;
+}
+.article-link:active{
+    color:black;
+}
+
+.article-link:hover{
+    color:black;
+}
+
+.delete{
+    float:right;
+}
+
+.note{
+    margin-right:10px;
+    float:right;
+}
+
+#note-title{
+    width:100%;
+}
+#note-content{
+    border-radius:5px;
+}

@@ -1,21 +1,57 @@
-$(function(){
-
-    $("#scrape-btn").on("click", function(event){
-        console.log("inside scrape.js");
-        $.ajax({
-            method:"GET",
-            url:"/scrape"
-        }).then(function(results){
-            alert("scraped Records");
-            getArticles();
-        });
+$("#scrape-btn").on("click", function(event){
+    $.ajax({
+        method:'GET',
+        url:'/scrape'
+    }).then(function(results){
+        alert("scrape completed!");
+        location.reload();
     });
+});
 
-    function getArticles(){
-        $.getJSON("/", function(data){
-            console.log("fetching Articles completed");
-        });
-    }
+$(document).on("click", ".save", function() {
+    console.log("inside save-btn click");
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method:'POST',
+        url:'/save/'+thisId
+    }).then(function(results){
+        location.reload();
+    });
+});
 
-    getArticles();
+$(document).on("click", "#del-btn", function(){
+    console.log("Delete button on click");
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method:'POST',
+        url:'/delete/'+thisId
+    }).then(function(results){
+        location.reload();
+    });
+});
+
+$(document).on("click", "#notes-btn", function(){
+    console.log("inside article note click");
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method:'GET',
+        url:'/savenote/'+thisId
+    }).then(function(notes){
+        console.log("Fetched notes");
+    });
+});
+
+$(document).on("click", "#save-note", function() {
+    console.log("Save note clicked");
+    var thisId = $(this).attr("data-id");
+    $.ajax({
+        method:'POST',
+        url:'/savenote/'+thisId,
+        data: {
+            title: $("#note-title").val(),
+            body: $("#note-content").val()
+          }
+    }).then(function(results){
+        location.reload();
+    });
 });
