@@ -33,6 +33,8 @@ $(document).on("click", "#del-btn", function(){
 $(document).on("click", "#notes-btn", function(){
     console.log("inside article note click");
     var thisId = $(this).attr("data-id");
+    console.log("data-id: ", thisId);
+
     $.ajax({
         method:'GET',
         url:'/savenote/'+thisId
@@ -44,7 +46,7 @@ $(document).on("click", "#notes-btn", function(){
 $(document).on("click", "#save-note", function() {
     console.log("Save note clicked");
     var thisId = $(this).attr("data-id");
-    $.ajax({
+        $.ajax({
         method:'POST',
         url:'/savenote/'+thisId,
         data: {

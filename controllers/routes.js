@@ -59,8 +59,8 @@ module.exports = function(app){
     });
 
     app.get("/articles/:id", function(req, res){
-        db.Article.find({_id: req.params.id}).populate("note").then(function(articles){
-            res.json(articles);
+        db.Article.findOne({_id: req.params.id}).populate("note").then(function(article){
+            res.json(article);
         }).catch(function(err){
             res.json(err);
         });
@@ -76,9 +76,10 @@ module.exports = function(app){
 
     app.get("/savenote/:id", function(req,res){
         console.log("inside savenote/id get");
-        db.Article.findOne({ _id: req.params.id }).populate("note").then(function (results) {
-            console.log(results);
-            res.render("saved", {articles:articles});
+        db.Article.findOne({_id: req.params.id }).populate("note").then(function (articleWithNote) {
+            console.log(articleWithNote);
+            var articleNoteObj = {articleWithNote:articleWithNote}
+            res.render("saved", articleNoteObj);
           }).catch(function (err) {
             res.json(err);
           });
