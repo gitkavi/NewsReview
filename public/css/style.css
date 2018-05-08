@@ -85,11 +85,13 @@ body, html {
 }
 
 #note-lbl{
-    border-color: lightgray;
-    border:1px;
+    border:1px lightgray solid;
     border-radius: 5px;
+    padding:10px 10px 15px 10px;
 }
-
+#note-del{
+    margin-right:10px;
+}
 .delete{
     float:right;
 }

@@ -30,19 +30,6 @@ $(document).on("click", "#del-btn", function(){
     });
 });
 
-$(document).on("click", "#notes-btn", function(){
-    console.log("inside article note click");
-    var thisId = $(this).attr("data-id");
-    console.log("data-id: ", thisId);
-
-    $.ajax({
-        method:'GET',
-        url:'/savenote/'+thisId
-    }).then(function(notes){
-        console.log("Fetched notes");
-    });
-});
-
 $(document).on("click", "#save-note", function() {
     console.log("Save note clicked");
     var thisId = $(this).attr("data-id");
@@ -50,7 +37,6 @@ $(document).on("click", "#save-note", function() {
         method:'POST',
         url:'/savenote/'+thisId,
         data: {
-            title: $("#note-title").val(),
             body: $("#note-content").val()
           }
     }).then(function(results){

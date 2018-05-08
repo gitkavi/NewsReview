@@ -6,6 +6,7 @@ module.exports = function(app){
     app.get("/scrape", function(req,res){
         axios.get("http://www.nytimes.com/section/books/review").then(function(response){
             var $ = cheerio.load(response.data);
+            var counter =0;
             $("div.story-body").each(function(i, element){
                 var result = {};
                 result.img = $(this).parent().find("figure").find("a").children("img").attr("src");
@@ -14,7 +15,8 @@ module.exports = function(app){
                 result.summary = $(this).find("p.summary").text();
                 if(result.title !== '' && result.link !== '' && result.img !== ''){
                     db.Article.create(result).then(function(dbArticle){
-                        console.log(dbArticle);
+                        counter++;
+                        console.log(counter +":" +dbArticle);
                     }).catch(function(err){
                         res.json(err);
                     });
@@ -51,7 +53,7 @@ module.exports = function(app){
     });
 
     app.get("/articles", function(req, res){
-        db.Article.find({}).populate("note").then(function(articles){
+        db.Article.find({}).populate("notes").then(function(articles){
             res.json(articles);
         }).catch(function(err){
             res.json(err);
@@ -59,7 +61,7 @@ module.exports = function(app){
     });
 
     app.get("/articles/:id", function(req, res){
-        db.Article.findOne({_id: req.params.id}).populate("note").then(function(article){
+        db.Article.findOne({_id: req.params.id}).populate("notes").then(function(article){
             res.json(article);
         }).catch(function(err){
             res.json(err);
@@ -67,28 +69,18 @@ module.exports = function(app){
     });
 
     app.get("/saved", function(req,res){
-        db.Article.find({saved:true}).then(function(articles){
+        db.Article.find({saved:true}).populate("notes").then(function(articles){
             res.render("saved",{articles:articles});
         }).catch(function(err){
             res.json(err);
         });
     });
 
-    app.get("/savenote/:id", function(req,res){
-        console.log("inside savenote/id get");
-        db.Article.findOne({_id: req.params.id }).populate("note").then(function (articleWithNote) {
-            console.log(articleWithNote);
-            var articleNoteObj = {articleWithNote:articleWithNote}
-            res.render("saved", articleNoteObj);
-          }).catch(function (err) {
-            res.json(err);
-          });
-    });
-
     app.post("/savenote/:id", function(req,res){
         console.log("inside savenote/id post");
         db.Note.create(req.body).then(function (dbNote) {
-            return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+            return db.Article.findOneAndUpdate({ '_id': req.params.id },{'$push':{'notes':dbNote._id}},{new:true});
+            // return db.Article.findOneAndUpdate({ _id: req.params.id },{push:{ note: dbNote._id }},{new:true});
           }).then(function (results) {
             console.log(results);
             res.json(results);
@@ -100,6 +92,7 @@ module.exports = function(app){
     app.delete("/delete/:id", function(req, res){
         console.log("inside delete note click");
         db.Note.findOneAndRemove({_id:req.params.id}).then(function(results){
+            return db.Article.update({ },{'$pull':{'notes': {'_id':[dbNote._id] }}},{multi:true});
             console.log(results);
             res.json(results);
         }).catch(function(err){

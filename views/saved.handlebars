@@ -52,19 +52,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Notes for Article:</h4>
+                <h3 class="modal-title" id="myModalLabel">Notes for Article: {{this._id}}</h3>
             </div>
+            {{#if this.notes}}
             <div class="modal-body">
+                {{#each this.notes}}
                 <div id="note-lbl">
-                    <label> {{articleWithNote.note._id}}</label>
-
-                    <label>{{articleWithNote.note.title}}</label>
-                    <hr>
-                    <label>{{articleWithNote.note.body}}</label>
-                    <button class="btn btn-danger" id ="note-del" data-id={{this._id}} style="float:right">&times;</button>
+                    <div>{{this.body}} <button class="btn btn-danger" id ="note-del" data-id={{this._id}} style="float:right">&times;</button>
+</div>
                 </div>
-                <br>
-                <input placeholder="Title" id="note-title">
+                {{/each}}
                 <br>
                 <textarea placeholder="New note" rows="8" cols="78" id="note-content"></textarea>
             </div>
@@ -72,6 +69,20 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="save-note" data-id={{this._id}}>Save Note</button>
             </div>
+            {{/if}}
+            {{#unless this.notes}}
+            <div class="modal-body">
+                <div id="note-lbl">
+                    <label>No notes for this article yet</label>
+                </div>
+                <br>
+                <textarea placeholder="New note" rows="8" cols="78" id="note-content"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-note" data-id={{this._id}}>Save Note</button>
+            </div>
+            {{/unless}}
         </div>
     </div>
 </div>
