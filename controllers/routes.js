@@ -80,7 +80,6 @@ module.exports = function(app){
         console.log("inside savenote/id post");
         db.Note.create(req.body).then(function (dbNote) {
             return db.Article.findOneAndUpdate({ '_id': req.params.id },{'$push':{'notes':dbNote._id}},{new:true});
-            // return db.Article.findOneAndUpdate({ _id: req.params.id },{push:{ note: dbNote._id }},{new:true});
           }).then(function (results) {
             console.log(results);
             res.json(results);
@@ -92,7 +91,9 @@ module.exports = function(app){
     app.delete("/delete/:id", function(req, res){
         console.log("inside delete note click");
         db.Note.findOneAndRemove({_id:req.params.id}).then(function(results){
-            return db.Article.update({ },{'$pull':{'notes': {'_id':[dbNote._id] }}},{multi:true});
+            console.log(req.body._id);
+            return db.Article.findOneAndUpdate({'_id':req.body},{'$pull':{'notes':req.params.id}},{multi:true});
+         }).then(function(results){
             console.log(results);
             res.json(results);
         }).catch(function(err){

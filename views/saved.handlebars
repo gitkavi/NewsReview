@@ -45,47 +45,47 @@
         </div>
     </div>
     <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h3 class="modal-title" id="myModalLabel">Notes for Article: {{this._id}}</h3>
-            </div>
-            {{#if this.notes}}
-            <div class="modal-body">
-                {{#each this.notes}}
-                <div id="note-lbl">
-                    <div>{{this.body}} <button class="btn btn-danger" id ="note-del" data-id={{this._id}} style="float:right">&times;</button>
-</div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title" id="myModalLabel">Notes for Article: {{this._id}}</h3>
                 </div>
-                {{/each}}
-                <br>
-                <textarea placeholder="New note" rows="8" cols="78" id="note-content"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save-note" data-id={{this._id}}>Save Note</button>
-            </div>
-            {{/if}}
-            {{#unless this.notes}}
-            <div class="modal-body">
-                <div id="note-lbl">
-                    <label>No notes for this article yet</label>
+                {{#if this.notes}}
+                <div class="modal-body" id ="note-mdl" data-id ={{this._id}}>
+                    {{#each this.notes}}
+                    <div id="note-lbl">
+                        <div>{{this.body}}
+                            <button class="btn btn-danger" id="note-del" data-id={{this._id}} style="float:right">&times;</button>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <br>
+                    <textarea placeholder="New note" rows="8" cols="78" id="note-content"></textarea>
                 </div>
-                <br>
-                <textarea placeholder="New note" rows="8" cols="78" id="note-content"></textarea>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-note" data-id={{this._id}}>Save Note</button>
+                </div>
+                {{/if}} {{#unless this.notes}}
+                <div class="modal-body">
+                    <div id="note-lbl">
+                        <label>No notes for this article yet</label>
+                    </div>
+                    <br>
+                    <textarea placeholder="New note" rows="8" cols="78" id="note-content"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-note" data-id={{this._id}}>Save Note</button>
+                </div>
+                {{/unless}}
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save-note" data-id={{this._id}}>Save Note</button>
-            </div>
-            {{/unless}}
         </div>
     </div>
-</div>
     {{/each}} {{/if}} {{#unless articles}}
     <div>
         <div class="well text-center">
@@ -94,4 +94,3 @@
     </div>
     {{/unless}}
 </section>
-
